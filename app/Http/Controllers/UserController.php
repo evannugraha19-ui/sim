@@ -26,15 +26,18 @@ class UserController extends Controller
     {
         $request->validate([
             'name'       => 'required|string|max:255',
-            'email'      => 'required|email|unique:users,email',
-            'departemen' => 'required|string|max:255',
-            'password'   => 'required|string|min:6',
-            'role'       => 'required|string',
+            'email'      => 'required|email|unique:users,email' . (isset($user) ? ',' . $user->id : ''),
+            'phone'      => 'string',
+            'departemen' => $request->role === 'teknisi' ? 'required|string|max:255' : 'nullable|string|max:255',
+            'password'   => isset($user) ? 'nullable|string|min:6' : 'required|string|min:6',
+            'role'       => 'required|string|in:user,teknisi',
         ]);
+
 
         User::create([
             'name'       => $request->name,
             'email'      => $request->email,
+            'phone'      => $request->phone,
             'departemen' => $request->departemen,
             'password'   => Hash::make($request->password),
             'role'       => $request->role,
@@ -53,14 +56,18 @@ class UserController extends Controller
     {
         $request->validate([
             'name'       => 'required|string|max:255',
-            'email'      => 'required|email|unique:users,email,' . $user->id,
-            'departemen' => 'required|string|max:255',
-            'password'   => 'nullable|string|min:6',
+            'phone'      => 'string',
+            'email'      => 'required|email|unique:users,email' . (isset($user) ? ',' . $user->id : ''),
+            'departemen' => $request->role === 'teknisi' ? 'required|string|max:255' : 'nullable|string|max:255',
+            'password'   => isset($user) ? 'nullable|string|min:6' : 'required|string|min:6',
+            'role'       => 'required|string|in:user,teknisi',
         ]);
+
 
         $user->update([
             'name'       => $request->name,
             'email'      => $request->email,
+            'phone'      => $request->phone,
             'departemen' => $request->departemen,
             'password'   => $request->filled('password') ? Hash::make($request->password) : $user->password,
         ]);
@@ -69,8 +76,9 @@ class UserController extends Controller
             ->with('success', 'User berhasil diperbarui!');
     }
 
-    public function destroy(User $user)
+    public function destroy($id)
     {
+        $user =  User::findOrFail($id);
         $role = $user->role;
         $user->delete();
 

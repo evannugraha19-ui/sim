@@ -14,6 +14,7 @@ class Pengaduan extends Model
         'departemen',
         'nama_mesin',
         'tanggal_laporan',
+        'hasil_perbaikan',
         'keterangan',
         'status',
     ];

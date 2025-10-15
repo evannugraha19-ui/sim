@@ -146,7 +146,7 @@
 
             {{-- Form untuk Teknisi, View biasa untuk User --}}
             @if (Auth::user()->role === 'teknisi')
-                <form method="POST" action="{{ url('/pengaduan/{id}', $pengaduan->id) }}"
+                <form method="POST" action="{{ url('/pengaduan/' . $pengaduan->id) }}"
                     class="bg-gray-800 border border-amber-800/40 rounded-2xl p-8 shadow-lg w-full max-w-5xl">
                     @csrf
                     @method('PUT')
@@ -251,14 +251,14 @@
                     {{-- Teknisi: Editable textarea --}}
                     <textarea name="hasil_perbaikan" rows="4" required
                         class="w-full bg-gray-900 border border-amber-900/40 text-amber-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-                        placeholder="Masukkan hasil perbaikan atau catatan...">{{ $pengaduan->laporan->hasil_perbaikan ?? '' }}</textarea>
+                        placeholder="Masukkan hasil perbaikan atau catatan...">{{ $pengaduan->hasil_perbaikan ?? '' }}</textarea>
                     @error('hasil_perbaikan')
                         <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 @else
                     {{-- User: Readonly textarea --}}
                     <textarea rows="4" readonly
-                        class="w-full bg-gray-900 border border-amber-900/40 text-amber-200 rounded-lg px-4 py-2">{{ $pengaduan->laporan->hasil_perbaikan ?? 'Belum ada catatan dari petugas.' }}</textarea>
+                        class="w-full bg-gray-900 border border-amber-900/40 text-amber-200 rounded-lg px-4 py-2">{{ $pengaduan->hasil_perbaikan ?? 'Belum ada catatan dari petugas.' }}</textarea>
                 @endif
             </div>
 

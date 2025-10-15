@@ -26,13 +26,31 @@
             {{-- Navigation --}}
             <nav class="relative p-4" x-data="{ openMenu: false }">
                 <ul class="space-y-1.5">
-                    <li>
-                        <a href="/dashboard"
-                            class="flex items-center space-x-3 px-4 py-3 rounded-lg text-amber-200/80 hover:text-white hover:bg-gray-800 transition-all">
-                            <i class="fas fa-home text-lg"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
+                    @if (Auth::user()->role === 'user')
+                        <li>
+                            <a href="/dashboard"
+                                class="flex items-center space-x-3 px-4 py-3 rounded-lg text-amber-200/80 hover:text-white hover:bg-gray-800 transition-all">
+                                <i class="fas fa-home text-lg"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                    @elseif (Auth::user()->role === 'teknisi')
+                        <li>
+                            <a href="/dashboard-teknisi"
+                                class="flex items-center space-x-3 px-4 py-3 rounded-lg text-amber-200/80 hover:text-white hover:bg-gray-800 transition-all">
+                                <i class="fas fa-home text-lg"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                    @elseif (Auth::user()->role === 'admin')
+                        <li>
+                            <a href="/dashboard-admin"
+                                class="flex items-center space-x-3 px-4 py-3 rounded-lg text-amber-200/80 hover:text-white hover:bg-gray-800 transition-all">
+                                <i class="fas fa-home text-lg"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                    @endif
                     <li>
                         <a href="/riwayat-pengaduan"
                             class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-amber-600 text-white font-medium transition-all hover:bg-amber-500">
@@ -134,7 +152,7 @@
                 <table class="min-w-full text-sm text-left border-collapse">
                     <thead class="bg-amber-900/40 text-amber-200 uppercase text-xs tracking-wider">
                         <tr>
-                            <th class="px-4 py-3 border-b border-amber-800/40">No</th>
+                            {{-- <th class="px-4 py-3 border-b border-amber-800/40">No</th> --}}
                             <th class="px-4 py-3 border-b border-amber-800/40">ID</th>
                             <th class="px-4 py-3 border-b border-amber-800/40">Nama</th>
                             <th class="px-4 py-3 border-b border-amber-800/40">Mesin</th>
@@ -147,7 +165,7 @@
                     <tbody>
                         @forelse ($pengaduans as $index => $p)
                             <tr class="hover:bg-amber-900/10 transition-all">
-                                <td class="px-4 py-2 border-b border-amber-900/40 text-center">{{ $index + 1 }}</td>
+                                {{-- <td class="px-4 py-2 border-b border-amber-900/40 text-center">{{ $index + 1 }}</td> --}}
                                 <td class="px-4 py-2 border-b border-amber-900/40">
                                     NP{{ str_pad($p->id, 4, '0', STR_PAD_LEFT) }}</td>
                                 <td class="px-4 py-2 border-b border-amber-900/40">{{ $p->user->name ?? 'Tidak diketahui' }}

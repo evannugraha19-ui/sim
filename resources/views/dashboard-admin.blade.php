@@ -28,7 +28,7 @@
             <nav class="relative p-4" x-data="{ openMenu: false }">
                 <ul class="space-y-1.5">
                     <li>
-                        <a href="/dashboard"
+                        <a href="/dashboard-admin"
                             class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-amber-600 text-white font-medium transition-all hover:bg-amber-500">
                             <i class="fas fa-home text-lg"></i>
                             <span>Dashboard</span>

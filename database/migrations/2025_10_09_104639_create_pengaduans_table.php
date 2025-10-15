@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('jabatan_pelapor');
             $table->string('departemen');
             $table->string('nama_mesin');
+            $table->string('hasil_perbaikan')->nullable();
             $table->date('tanggal_laporan');
             $table->text('keterangan');
 

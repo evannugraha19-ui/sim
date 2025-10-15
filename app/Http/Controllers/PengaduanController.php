@@ -64,8 +64,6 @@ class PengaduanController extends Controller
         return view('pengaduans.riwayat-pengaduan', compact('pengaduans'));
     }
 
-
-
     public function create()
     {
         return view('pengaduans.pengaduan-input');
@@ -74,14 +72,26 @@ class PengaduanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
-            'status' => 'nullable|string',
-            'user_id' => 'nullable|integer',
+            'nama_pelapor' => 'required|string|max:100',
+            'jabatan_pelapor' => 'required|string|max:100',
+            'departemen' => 'required|string|max:100',
+            'nama_mesin' => 'required|string|max:100',
+            'tanggal_laporan' => 'required|date',
+            'keterangan' => 'required|string',
         ]);
 
-        Pengaduan::create($request->all());
-        return redirect()->route('pengaduans.index')->with('success', 'Pengaduan berhasil ditambahkan');
+        Pengaduan::create([
+            'user_id' => Auth::id(),
+            'nama_pelapor' => $request->nama_pelapor,
+            'jabatan_pelapor' => $request->jabatan_pelapor,
+            'departemen' => $request->departemen,
+            'nama_mesin' => $request->nama_mesin,
+            'tanggal_laporan' => $request->tanggal_laporan,
+            'keterangan' => $request->keterangan,
+            'status' => 'Menunggu',
+        ]);
+
+        return redirect('/riwayat-pengaduan')->with('success', 'Pengaduan berhasil ditambahkan!');
     }
 
     public function show($id)
@@ -102,23 +112,24 @@ class PengaduanController extends Controller
 
     public function update(Request $request, $id)
     {
-        $pengaduan = \App\Models\Pengaduan::findOrFail($id);
+        $pengaduan = Pengaduan::findOrFail($id);
 
         $validated = $request->validate([
             'status' => 'required|string',
             'hasil_perbaikan' => 'nullable|string',
         ]);
 
-        $pengaduan->update(['status' => $validated['status']]);
+        $pengaduan->update(['status' => $validated['status'], 'hasil_perbaikan' => $validated['hasil_perbaikan']]);
 
-        return redirect()->route('pengaduan.show', $id)
+        return redirect('/riwayat-pengaduan')
             ->with('success', 'Data pengaduan berhasil diperbarui.');
     }
 
 
-    public function destroy(Pengaduan $pengaduan)
+    public function destroy($id)
     {
+        $pengaduan = Pengaduan::findOrFail($id);
         $pengaduan->delete();
-        return redirect()->route('pengaduans.index')->with('success', 'Pengaduan berhasil dihapus');
+        return redirect('/riwayat-pengaduan')->with('success', 'Pengaduan berhasil dihapus');
     }
 }

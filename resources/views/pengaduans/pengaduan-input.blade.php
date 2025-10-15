@@ -51,7 +51,7 @@
                     @endif
                     <li>
                         <a href="/riwayat-pengaduan"
-                            class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-amber-600 text-white font-medium transition-all hover:bg-amber-500">
+                            class="flex items-center space-x-3 px-4 py-3 rounded-lg text-amber-200/80 hover:text-white hover:bg-gray-800 transition-all">
                             <i class="fas fa-list text-lg"></i>
                             <span>Riwayat Pengaduan</span>
                         </a>
@@ -59,7 +59,7 @@
                     @if (Auth::user()->role === 'user')
                         <li>
                             <a href="/input-pengaduan"
-                                class="flex items-center space-x-3 px-4 py-3 rounded-lg text-amber-200/80 hover:text-white hover:bg-gray-800 transition-all">
+                                class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-amber-600 text-white font-medium transition-all hover:bg-amber-500">
                                 <i class="fas fa-plus-circle text-lg"></i>
                                 <span>Input Pengaduan</span>
                             </a>

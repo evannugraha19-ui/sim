@@ -11,15 +11,20 @@ return new class extends Migration
      */
     public function up()
     {
-    Schema::create('pengaduans', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-        $table->string('judul_laporan');
-        $table->text('deskripsi');
-        $table->string('lokasi_mesin');
-        $table->enum('status', ['menunggu', 'diproses', 'selesai'])->default('menunggu');
-        $table->timestamps();
-     });
+        Schema::create('pengaduans', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+
+            $table->string('nama_pelapor');
+            $table->string('jabatan_pelapor');
+            $table->string('departemen');
+            $table->string('nama_mesin');
+            $table->date('tanggal_laporan');
+            $table->text('keterangan');
+
+            $table->enum('status', ['menunggu', 'diproses', 'selesai'])->default('menunggu');
+            $table->timestamps();
+        });
     }
 
 
